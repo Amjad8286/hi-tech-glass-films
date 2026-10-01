@@ -1,8 +1,8 @@
 {
-  "name": "elegant-glass-films",
+  "name": "hi-tech-glass-films",
   "version": "1.0.0",
   "private": true,
-  "description": "Official website for Elegant Glass Films, Andheri West, Mumbai.",
+  "description": "Official website for Hi-Tech Glass Films, Andheri West, Mumbai.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

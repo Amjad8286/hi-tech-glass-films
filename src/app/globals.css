@@ -12,43 +12,92 @@
   ::selection {
     @apply bg-glass/20 text-ink;
   }
+  /* One visible focus treatment for the whole site, in the brand colour. */
+  :where(a, button, input, select, textarea, summary):focus-visible {
+    @apply outline-none ring-2 ring-glass ring-offset-2 ring-offset-frost;
+  }
 }
 
 @layer components {
-  /* Signature: the "light through glass" gradient — cool glass to warm sun,
-     the literal job of sun-control film. */
-  .light-gradient {
+  /* Signature gradient: deep engineered blue running out to ice — light
+     passing through a treated pane, which is the literal job of the product. */
+  .brand-gradient {
     background-image: linear-gradient(
-      115deg,
-      #0a5c57 0%,
-      #12a39a 38%,
-      #6fd0c8 60%,
-      #e8a33d 100%
+      125deg,
+      #0b265f 0%,
+      #133a8f 22%,
+      #2f75f2 58%,
+      #59d2e6 100%
     );
   }
 
-  /* Frosted glass surface used for the hero panel and cards. */
+  /* Frosted surface used for panels that sit over imagery. */
   .frosted {
-    background: rgba(243, 246, 246, 0.55);
-    backdrop-filter: blur(14px) saturate(120%);
-    -webkit-backdrop-filter: blur(14px) saturate(120%);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(245, 248, 251, 0.6);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    border: 1px solid rgba(255, 255, 255, 0.65);
   }
 
-  /* Hairline that reads like the edge of a glass pane. */
+  .frosted-dark {
+    background: rgba(7, 13, 20, 0.72);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    border: 1px solid rgba(122, 176, 255, 0.22);
+  }
+
+  /* Hairline that reads like the lit edge of a glass pane. */
   .glass-edge {
     height: 1px;
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(18, 163, 154, 0.5) 20%,
-      rgba(232, 163, 61, 0.5) 80%,
+      rgba(47, 117, 242, 0.55) 25%,
+      rgba(89, 210, 230, 0.55) 75%,
       transparent
     );
   }
 
+  /* Blueprint pane grid — the technical texture behind hero and dark bands.
+     Sits under content at low opacity; never carries meaning on its own. */
+  .pane-grid {
+    background-image:
+      linear-gradient(to right, rgba(47, 117, 242, 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(47, 117, 242, 0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .pane-grid-dark {
+    background-image:
+      linear-gradient(to right, rgba(122, 176, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(122, 176, 255, 0.08) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Standard light card. Centralised so surfaces stay identical site-wide. */
+  .surface {
+    @apply rounded-2xl border border-frost-deep bg-white/75;
+  }
+
   .eyebrow {
     @apply font-mono text-[11px] uppercase tracking-eyebrow text-glass-deep;
+  }
+
+  /* Buttons — one definition each, used by every CTA on the site. */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors;
+  }
+  .btn-primary {
+    @apply btn bg-ink text-frost hover:bg-glass-deep;
+  }
+  .btn-brand {
+    @apply btn bg-glass-deep text-frost hover:bg-glass-dark;
+  }
+  .btn-ghost {
+    @apply btn border border-ink/15 text-ink hover:border-glass hover:text-glass-deep;
+  }
+  .btn-on-dark {
+    @apply btn border border-glass-light/30 text-frost hover:border-glass-light hover:bg-white/5;
   }
 }
 

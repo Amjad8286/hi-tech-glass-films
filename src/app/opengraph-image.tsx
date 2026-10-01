@@ -1,8 +1,10 @@
 import { ImageResponse } from "next/og";
-import { site } from "@/lib/site";
+import { services, site } from "@/lib/site";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+const domain = site.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
 export default function OgImage() {
   return new ImageResponse(
@@ -10,170 +12,122 @@ export default function OgImage() {
       style={{
         width: 1200,
         height: 630,
-        background: "#0E1518",
+        background: "#070D14",
         display: "flex",
         position: "relative",
         fontFamily: "sans-serif",
         overflow: "hidden",
       }}
     >
-      {/* Top gradient strip */}
+      {/* Brand strip along the top edge */}
       <div
         style={{
           position: "absolute",
           top: 0,
           left: 0,
           right: 0,
-          height: 3,
-          background: "linear-gradient(90deg, #12A39A 0%, #0C7C75 100%)",
+          height: 4,
+          background: "linear-gradient(90deg, #0B265F 0%, #2F75F2 55%, #59D2E6 100%)",
           display: "flex",
         }}
       />
 
-      {/* Right accent bar */}
-      <div
-        style={{
-          position: "absolute",
-          right: 0,
-          top: 0,
-          width: 6,
-          height: 630,
-          background: "#12A39A",
-          display: "flex",
-        }}
-      />
-
-      {/* Left content column — 730px */}
+      {/* Left content column */}
       <div
         style={{
           width: 730,
           height: 630,
           display: "flex",
           flexDirection: "column",
-          padding: "72px 56px 72px 80px",
+          padding: "70px 56px 64px 80px",
           flexShrink: 0,
         }}
       >
-        {/* Eyebrow */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            marginBottom: 44,
-          }}
-        >
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 40 }}>
           <div
-            style={{
-              width: 8,
-              height: 8,
-              background: "#12A39A",
-              borderRadius: 4,
-              display: "flex",
-            }}
+            style={{ width: 8, height: 8, background: "#59D2E6", borderRadius: 4, display: "flex" }}
           />
           <span
             style={{
               fontSize: 13,
               letterSpacing: "0.22em",
-              color: "#12A39A",
+              color: "#7AB0FF",
               textTransform: "uppercase",
               fontFamily: "monospace",
             }}
           >
-            Andheri West, Mumbai · Est. {site.founded}
+            {site.address.locality}, {site.address.city} · Window film & glass
           </span>
         </div>
 
-        {/* Company name */}
+        {/* Wordmark */}
         <div
           style={{
-            fontSize: 76,
+            fontSize: 74,
             fontWeight: 700,
-            color: "#F3F6F6",
-            lineHeight: 1.05,
-            letterSpacing: "-0.02em",
-            marginBottom: 24,
+            color: "#F5F8FB",
+            lineHeight: 1.04,
+            letterSpacing: "-0.025em",
+            marginBottom: 22,
+            display: "flex",
+            flexWrap: "wrap",
           }}
         >
-          {site.name}
+          <span>{site.brand.lead}&nbsp;</span>
+          <span style={{ color: "#7AB0FF" }}>{site.brand.trail}</span>
         </div>
 
-        {/* Tagline */}
-        <div
-          style={{
-            fontSize: 22,
-            color: "#5C6F72",
-            lineHeight: 1.55,
-            maxWidth: 560,
-          }}
-        >
+        <div style={{ fontSize: 22, color: "#8DA0B5", lineHeight: 1.5, maxWidth: 560 }}>
           {site.tagline}
         </div>
 
-        {/* Spacer */}
         <div style={{ flex: 1, display: "flex" }} />
 
-        {/* Service chips */}
-        <div
-          style={{
-            display: "flex",
-            gap: 8,
-            flexWrap: "wrap",
-            marginBottom: 28,
-          }}
-        >
-          {[
-            "Sun Control",
-            "Frosted Glass",
-            "One-Way Privacy",
-            "Safety Film",
-            "UV Protection",
-            "Decorative",
-          ].map((s) => (
+        {/* Range of work */}
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 26 }}>
+          {services.slice(0, 6).map((s) => (
             <div
-              key={s}
+              key={s.slug}
               style={{
                 padding: "5px 13px",
-                border: "1px solid rgba(18, 163, 154, 0.28)",
+                border: "1px solid rgba(47, 117, 242, 0.35)",
                 borderRadius: 100,
                 fontSize: 12,
-                color: "#8A9B9D",
+                color: "#8DA0B5",
                 display: "flex",
               }}
             >
-              {s}
+              {s.name}
             </div>
           ))}
         </div>
 
-        {/* Bottom row */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderTop: "1px solid rgba(227, 234, 234, 0.1)",
-            paddingTop: 22,
+            borderTop: "1px solid rgba(228, 235, 242, 0.1)",
+            paddingTop: 20,
           }}
         >
-          <div style={{ fontSize: 15, color: "#E8A33D", display: "flex" }}>
-            {site.rating.value} · {site.rating.count} Google Reviews
+          <div style={{ fontSize: 17, color: "#F5F8FB", display: "flex", fontWeight: 600 }}>
+            {site.phone.display}
           </div>
           <div
             style={{
               fontSize: 13,
-              color: "#5C6F72",
+              color: "#54657A",
               letterSpacing: "0.06em",
               fontFamily: "monospace",
             }}
           >
-            elegantglassfilms.in
+            {domain}
           </div>
         </div>
       </div>
 
-      {/* Right artwork column — 470px, position: relative for child absolutes */}
+      {/* Right artwork column — layered panes, the brand mark writ large */}
       <div
         style={{
           flex: 1,
@@ -184,13 +138,7 @@ export default function OgImage() {
           position: "relative",
         }}
       >
-        {/*
-          Glass panel art: three stacked 248×320 panes, each offset 12px.
-          Right column is ~470px wide, 630px tall.
-          Center: 235, 315. Front panel top-left: 111, 155.
-        */}
-
-        {/* Back panel — offset 24px up-left */}
+        {/* Back pane — offset 24px up-left */}
         <div
           style={{
             position: "absolute",
@@ -198,13 +146,12 @@ export default function OgImage() {
             left: 87,
             width: 248,
             height: 320,
-            border: "1px solid rgba(18, 163, 154, 0.1)",
+            border: "1px solid rgba(47, 117, 242, 0.14)",
             borderRadius: 8,
             display: "flex",
           }}
         />
-
-        {/* Mid panel — offset 12px up-left */}
+        {/* Mid pane — offset 12px up-left */}
         <div
           style={{
             position: "absolute",
@@ -212,13 +159,13 @@ export default function OgImage() {
             left: 99,
             width: 248,
             height: 320,
-            border: "1px solid rgba(18, 163, 154, 0.22)",
+            border: "1px solid rgba(47, 117, 242, 0.26)",
             borderRadius: 8,
             display: "flex",
           }}
         />
 
-        {/* Front glass pane with 4-quadrant window grid */}
+        {/* Front pane carrying the H of the mark */}
         <div
           style={{
             position: "absolute",
@@ -226,61 +173,48 @@ export default function OgImage() {
             left: 111,
             width: 248,
             height: 320,
-            border: "2px solid rgba(18, 163, 154, 0.48)",
-            borderRadius: 8,
-            overflow: "hidden",
+            border: "2px solid rgba(89, 210, 230, 0.5)",
+            borderRadius: 10,
+            background: "rgba(47, 117, 242, 0.07)",
             display: "flex",
-            flexDirection: "column",
           }}
-        >
-          {/* Top half */}
-          <div
-            style={{
-              width: 248,
-              height: 160,
-              borderBottom: "1.5px solid rgba(18, 163, 154, 0.28)",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                width: 123,
-                height: 160,
-                background: "rgba(18, 163, 154, 0.07)",
-                borderRight: "1.5px solid rgba(18, 163, 154, 0.28)",
-                display: "flex",
-              }}
-            />
-            <div
-              style={{
-                flex: 1,
-                height: 160,
-                background: "rgba(18, 163, 154, 0.03)",
-                display: "flex",
-              }}
-            />
-          </div>
-
-          {/* Bottom half */}
-          <div style={{ width: 248, flex: 1, display: "flex" }}>
-            <div
-              style={{
-                width: 123,
-                flex: 1,
-                background: "rgba(18, 163, 154, 0.03)",
-                borderRight: "1.5px solid rgba(18, 163, 154, 0.28)",
-                display: "flex",
-              }}
-            />
-            <div
-              style={{
-                flex: 1,
-                background: "rgba(18, 163, 154, 0.07)",
-                display: "flex",
-              }}
-            />
-          </div>
-        </div>
+        />
+        <div
+          style={{
+            position: "absolute",
+            left: 160,
+            top: 205,
+            width: 34,
+            height: 220,
+            borderRadius: 6,
+            background: "rgba(255, 255, 255, 0.55)",
+            display: "flex",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            left: 276,
+            top: 205,
+            width: 34,
+            height: 220,
+            borderRadius: 6,
+            background: "#F5F8FB",
+            display: "flex",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            left: 160,
+            top: 295,
+            width: 150,
+            height: 30,
+            borderRadius: 6,
+            background: "rgba(255, 255, 255, 0.9)",
+            display: "flex",
+          }}
+        />
       </div>
     </div>,
     { ...size },

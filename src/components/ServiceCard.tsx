@@ -1,47 +1,53 @@
 import Link from "next/link";
 import type { Service } from "@/lib/site";
+import { ServiceIcon } from "@/components/Icons";
 
-// Category → icon + label. Keeps the 11-card grid scannable: visitors
-// pattern-match the icon/badge before reading a single word of copy.
-const CATEGORY_STYLES: Record<string, { icon: string; label: string }> = {
-  "sun-control-film": { icon: "☀️", label: "Residential · Commercial" },
-  "one-way-privacy-film": { icon: "🪞", label: "Privacy" },
-  "frosted-glass-film": { icon: "❄️", label: "Decorative · Privacy" },
-  "decorative-glass-film": { icon: "✨", label: "Decorative" },
-  "safety-security-film": { icon: "🛡️", label: "Safety" },
-  "uv-protection-film": { icon: "🔆", label: "Protection" },
-  "office-glass-branding-film": { icon: "🏢", label: "Commercial" },
-  "residential-window-film": { icon: "🏠", label: "Residential" },
-  "commercial-glass-film-solutions": { icon: "🏬", label: "Commercial" },
-  "glass-mirror-work": { icon: "🪟", label: "Glass & Mirror" },
-  "car-window-tinting": { icon: "🚗", label: "Automotive" },
+// Badge → the audience the film is usually bought for. Keeps an 11-card grid
+// scannable: visitors pattern-match the icon and badge before reading copy.
+// Keys are service slugs from site.ts and must stay in step with them.
+const SERVICE_AUDIENCE: Record<string, string> = {
+  "sun-control-film": "Home · Office",
+  "one-way-privacy-film": "Privacy",
+  "frosted-glass-film": "Privacy · Decor",
+  "decorative-glass-film": "Decor",
+  "safety-security-film": "Safety",
+  "uv-protection-film": "Protection",
+  "office-glass-branding": "Commercial",
+  "residential-window-film": "Residential",
+  "commercial-glass-film": "Commercial",
+  "glass-and-mirror": "Glass & Mirror",
+  "car-window-tinting": "Automotive",
 };
 
 export function ServiceCard({ s }: { s: Service }) {
-  const cat = CATEGORY_STYLES[s.slug] ?? { icon: "🎬", label: "Film" };
   return (
     <Link
       href={`/services/${s.slug}`}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-frost-deep bg-white/70 p-6 transition-all hover:-translate-y-0.5 hover:border-glass/50 hover:shadow-[0_18px_40px_-24px_rgba(12,124,117,0.5)]"
+      className="group surface relative flex flex-col overflow-hidden p-6 transition-all hover:-translate-y-0.5 hover:border-glass/50 hover:shadow-lift"
     >
-      <div className="mb-5 flex items-center justify-between">
-        <span
-          aria-hidden
-          className="flex h-10 w-10 items-center justify-center rounded-xl bg-glass/10 text-lg transition-colors group-hover:bg-glass/20"
-        >
-          {cat.icon}
-        </span>
-        <span className="rounded-full border border-frost-deep px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide text-slate-muted">
-          {cat.label}
-        </span>
-      </div>
-      <h3 className="font-display text-xl font-semibold text-ink">{s.name}</h3>
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-muted">{s.short}</p>
+      {/* Brand hairline that lights up on hover. */}
       <span
         aria-hidden
-        className="mt-5 inline-flex items-center text-sm font-medium text-glass-deep"
-      >
-        <span className="transition-transform group-hover:translate-x-1">→</span>
+        className="absolute inset-x-0 top-0 h-0.5 scale-x-0 brand-gradient transition-transform duration-300 group-hover:scale-x-100"
+      />
+
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-glass/10 text-glass-deep transition-colors group-hover:bg-glass/20">
+          <ServiceIcon slug={s.slug} className="h-5 w-5" />
+        </span>
+        <span className="rounded-full border border-frost-deep px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide text-slate-muted">
+          {SERVICE_AUDIENCE[s.slug] ?? "Window film"}
+        </span>
+      </div>
+
+      <h3 className="font-display text-lg font-semibold leading-snug text-ink">{s.name}</h3>
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-muted">{s.short}</p>
+
+      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-glass-deep">
+        Explore
+        <span aria-hidden className="transition-transform group-hover:translate-x-1">
+          →
+        </span>
       </span>
     </Link>
   );

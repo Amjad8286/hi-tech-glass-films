@@ -10,9 +10,14 @@ export function ReviewCard({
   text: string;
 }) {
   return (
-    <figure className="flex h-full flex-col rounded-2xl border border-frost-deep bg-white/70 p-6">
-      <div className="flex items-center justify-between">
-        <div className="font-mono text-sm tracking-wide text-sun-deep">★★★★★</div>
+    <figure className="surface flex h-full flex-col p-6">
+      <div className="flex items-center justify-between gap-3">
+        <div
+          className="font-mono text-sm tracking-wide text-sun-deep"
+          aria-label="Rated 5 out of 5"
+        >
+          ★★★★★
+        </div>
         {tag ? (
           <span className="rounded-full border border-glass/30 bg-glass/5 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide text-glass-deep">
             {tag}

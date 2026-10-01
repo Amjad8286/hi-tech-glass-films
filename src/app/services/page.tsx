@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { services } from "@/lib/site";
+import { services, site } from "@/lib/site";
 import { Section, Eyebrow } from "@/components/Section";
 import { ServiceCard } from "@/components/ServiceCard";
 import { CTABand } from "@/components/CTABand";
@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   // Brand omitted — the root layout's title template appends it.
   title: "Window Film Services in Mumbai",
   description:
-    "Sun control, frosted glass, one-way privacy, safety, UV protection, decorative, office branding, residential, and car window tinting across Mumbai. Fitted by Elegant Glass Films, Andheri West.",
+    "Sun control, frosted glass, one-way privacy, safety, UV protection, decorative, office branding, residential and car window tinting across Mumbai. Supplied and fitted from Andheri West.",
   alternates: { canonical: "/services" },
   openGraph: {
-    title: "Glass Film Services in Mumbai — Elegant Glass Films",
+    title: `Glass Film Services in Mumbai — ${site.name}`,
     description:
       "Professional window film installation across Mumbai homes, offices, and commercial buildings. Sun control, privacy, safety, UV protection, and more.",
   },
@@ -22,7 +22,7 @@ export default function ServicesPage() {
     <>
       <Section className="pt-14 sm:pt-20">
         <Eyebrow>Services</Eyebrow>
-        <h1 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight sm:text-5xl">
+        <h1 className="mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
           Every film type, professionally fitted across Mumbai
         </h1>
         <p className="mt-5 max-w-xl text-lg text-slate-muted">

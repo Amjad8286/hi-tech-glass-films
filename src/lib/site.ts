@@ -1,48 +1,88 @@
 // Single source of truth for the whole site.
-// Keep NAP (name / address / phone) IDENTICAL to your Google Business Profile.
+// Keep NAP (name / address / phone) IDENTICAL to the Google Business Profile —
+// it feeds the JSON-LD schema and the sitemap, and a mismatch costs local rank.
+
+export type Rating = { value: string; count: number };
 
 export const site = {
-  name: "Elegant Glass Films",
-  legalName: "Elegant Glass Films",
-  tagline: "Window films that command light, heat, and privacy.",
-  category: "Glass & mirror shop",
-  // Update this to your real domain before deploying.
-  url: "https://elegantglassfilms.com",
-  rating: { value: "5.0", count: 24 },
-  founded: 2014,
+  name: "Hi-Tech Glass Films",
+  legalName: "Hi-Tech Glass Films",
+  /** Wordmark split — the logo sets the two halves in different weights. */
+  brand: { lead: "Hi-Tech", trail: "Glass Films" },
+  tagline: "Engineered window film for Mumbai heat, glare and privacy.",
+  category: "Window film & glass specialists",
+  // Update this to the real domain before deploying.
+  url: "https://hitechglassfilms.com",
+
+  /**
+   * Verified Google rating, or null.
+   *
+   * Every star and review-count claim on the site renders from this field, and
+   * `localBusinessSchema` only emits `aggregateRating` when it is set. Leave it
+   * null until the Hi-Tech Glass Films Business Profile has its own reviews:
+   * publishing a rating the profile cannot back up is a Google structured-data
+   * violation and risks a manual action.
+   */
+  rating: null as Rating | null,
 
   phone: {
-    display: "093266 25391",
-    tel: "+919326625391",
-    whatsapp: "919326625391",
+    display: "84339 78255",
+    tel: "+918433978255",
+    whatsapp: "918433978255",
   },
-  email: "elegantglassfilms@gmail.com",
+  /** Rendered on the contact page and in schema only when set. */
+  email: null as string | null,
 
   address: {
-    street: "United Co-op Society, 002, Bldg 3a, Vitthalbhai Patel Rd",
+    street: "Juhu Galli, Mahavi Darshan, Dhangar Wadi",
     locality: "Andheri West",
     region: "Maharashtra",
     city: "Mumbai",
     postalCode: "400058",
     country: "IN",
-    full: "United Co-op Society, 002, Bldg 3a, Andheri, Vitthalbhai Patel Rd, Andheri West, Mumbai, Maharashtra 400058",
+    full: "Juhu Galli, Mahavi Darshan, Dhangar Wadi, Andheri West, Mumbai, Maharashtra 400058",
   },
-  geo: { lat: 19.1197, lng: 72.8464 },
+  /** Approximate. Set these from the Business Profile map pin before launch. */
+  geo: { lat: 19.1265, lng: 72.8352 },
 
-  // GMB shows "Open 24 hours". Realistic, answerable hours convert better and
-  // look more trustworthy. Adjust to match how you actually operate.
+  // Realistic, answerable hours convert better than "open 24 hours" and look
+  // more trustworthy. Adjust to match how the shop actually operates.
   hours: [
     { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], open: "09:30", close: "20:00" },
     { days: ["Sunday"], open: null, close: null },
   ],
   hoursLabel: "Mon–Sat · 9:30 AM – 8:00 PM",
 
+  /** Public profiles. Null entries are skipped in the footer and in `sameAs` —
+   *  never point these at a network's homepage, it pollutes the schema. */
   social: {
-    google: "https://www.google.com/maps", // replace with your Maps profile link
-    instagram: "https://instagram.com",
-    facebook: "https://facebook.com",
+    google: null as string | null,
+    instagram: null as string | null,
+    facebook: null as string | null,
   },
-} as const;
+
+  /** Primary navigation. The header, the mobile menu and the footer all read
+   *  this one list, so a route is added or renamed in exactly one place. */
+  nav: [
+    { href: "/services", label: "Services" },
+    { href: "/gallery", label: "Our Work" },
+    { href: "/areas", label: "Areas" },
+    { href: "/reviews", label: "Reviews" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+  ],
+};
+
+/** Google Maps deep link to the shop — used by the footer, about and contact. */
+export const mapsSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  `${site.name}, ${site.address.full}`,
+)}`;
+
+/** Pre-filled WhatsApp link. Keeps the number and encoding in one place. */
+export function whatsappUrl(message?: string) {
+  const base = `https://wa.me/${site.phone.whatsapp}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
 
 export type Service = {
   slug: string;
@@ -833,6 +873,15 @@ export const featuredAreaSlugs = [
   "navi-mumbai",
 ];
 
+/**
+ * Customer testimonials.
+ *
+ * These carried over from the site's previous brand. Confirm each one belongs
+ * to Hi-Tech Glass Films — or replace them with quotes from this profile's own
+ * reviews — before launch. The star rating headline and the review JSON-LD are
+ * driven by `site.rating`, which stays null until the Business Profile has
+ * verifiable reviews, so nothing here makes a numeric claim on its own.
+ */
 export const reviews = [
   { name: "Rohan M.", area: "Andheri West", tag: "Residential", text: "Got sun control film for our west-facing living room. The drop in afternoon heat is real and the view is still crystal clear. Neat installation." },
   { name: "Priya S.", area: "Bandra", tag: "Commercial", text: "Frosted film on our office cabins looks like proper etched glass. Team measured everything and finished in a day. Highly recommend." },

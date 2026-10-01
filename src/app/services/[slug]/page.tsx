@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { services, site } from "@/lib/site";
+import { services, site, whatsappUrl } from "@/lib/site";
 import { Section, Eyebrow } from "@/components/Section";
 import { SpecReadout } from "@/components/SpecReadout";
 import { CTABand } from "@/components/CTABand";
 import { JsonLd } from "@/components/JsonLd";
 import { serviceSchema, faqSchema, breadcrumbSchema } from "@/lib/schema";
+import { PhoneIcon, WhatsAppIcon } from "@/components/Icons";
 
 // Pre-render every service page at build time (SSG).
 export function generateStaticParams() {
@@ -61,7 +62,7 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <Eyebrow>{s.name}</Eyebrow>
-            <h1 className="mt-4 font-display text-4xl font-semibold leading-tight sm:text-5xl">
+            <h1 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
               {s.headline}
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-slate-muted">{s.intro}</p>
@@ -70,7 +71,7 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
               <p className="mt-4 text-[15px] leading-relaxed text-slate-muted">{s.detail}</p>
             )}
 
-            <h2 className="mt-10 font-display text-xl font-semibold">Why people choose it</h2>
+            <h2 className="mt-10 font-display text-xl font-bold tracking-tight">Why people choose it</h2>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {s.benefits.map((b) => (
                 <li key={b} className="flex gap-2.5 text-[15px] text-ink/85">
@@ -80,12 +81,12 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
               ))}
             </ul>
 
-            <h2 className="mt-10 font-display text-xl font-semibold">Best for</h2>
+            <h2 className="mt-10 font-display text-xl font-bold tracking-tight">Best for</h2>
             <div className="mt-4 flex flex-wrap gap-2.5">
               {s.bestFor.map((b) => (
                 <span
                   key={b}
-                  className="rounded-full border border-frost-deep bg-white/60 px-4 py-1.5 text-sm text-ink"
+                  className="rounded-full border border-frost-deep bg-white/70 px-4 py-1.5 text-sm text-ink"
                 >
                   {b}
                 </span>
@@ -94,7 +95,7 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
 
             {s.process && s.process.length > 0 && (
               <>
-                <h2 className="mt-10 font-display text-xl font-semibold">How installation works</h2>
+                <h2 className="mt-10 font-display text-xl font-bold tracking-tight">How installation works</h2>
                 <ol className="mt-4 space-y-3">
                   {s.process.map((step, i) => (
                     <li key={step} className="flex gap-3 text-[15px] text-ink/85">
@@ -110,21 +111,22 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
           </div>
 
           <aside className="lg:pt-12">
-            <div className="rounded-3xl border border-frost-deep bg-white/70 p-6">
+            <div className="surface p-6">
               <p className="eyebrow">Performance</p>
               <div className="mt-4">
                 <SpecReadout specs={s.specs} />
               </div>
-              <a
-                href={`tel:${site.phone.tel}`}
-                className="mt-6 block rounded-full bg-ink py-3 text-center text-sm font-medium text-frost transition-colors hover:bg-glass-deep"
-              >
-                Get a quote · {site.phone.display}
+              <a href={`tel:${site.phone.tel}`} className="btn-primary mt-6 w-full">
+                <PhoneIcon className="h-4 w-4" />
+                {site.phone.display}
               </a>
               <a
-                href={`https://wa.me/${site.phone.whatsapp}`}
-                className="mt-3 block rounded-full border border-ink/15 py-3 text-center text-sm font-medium text-ink transition-colors hover:border-glass hover:text-glass-deep"
+                href={whatsappUrl(`Hi! I'd like a quote for ${s.name}.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-brand mt-3 w-full"
               >
+                <WhatsAppIcon className="h-4 w-4" />
                 Ask on WhatsApp
               </a>
 
@@ -155,7 +157,7 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
 
       {/* FAQ — also emitted as FAQPage schema above for rich results. */}
       <Section className="mt-20">
-        <h2 className="font-display text-2xl font-semibold sm:text-3xl">Common questions</h2>
+        <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">Common questions</h2>
         <div className="mt-8 divide-y divide-frost-deep border-y border-frost-deep">
           {s.faqs.map((f) => (
             <details key={f.q} className="group py-5">

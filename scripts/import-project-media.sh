@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copies the media referenced by src/lib/projectMedia.ts out of the raw
-# `elegent-glass-film/` drop and into `public/gallery/media/` under the slug
+# `project-media/` drop and into `public/gallery/media/` under the slug
 # filenames the data file expects, then extracts a poster frame for each video.
 #
 # Requires: node, ffmpeg. Safe to re-run — existing files are overwritten.
@@ -10,7 +10,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SRC_DIR="$ROOT/elegent-glass-film"
+SRC_DIR="$ROOT/project-media"
 OUT_DIR="$ROOT/public/gallery/media"
 
 [ -d "$SRC_DIR" ] || { echo "Source directory not found: $SRC_DIR" >&2; exit 1; }

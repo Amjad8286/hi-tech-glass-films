@@ -1,5 +1,5 @@
 /**
- * Gallery entries generated from the shot library in `elegent-glass-film/`.
+ * Gallery entries generated from the shot library in `project-media/`.
  *
  * Every field below was written after viewing the actual frame (videos were
  * sampled at multiple timestamps), never from the filename alone. WhatsApp
@@ -36,7 +36,7 @@ export interface ProjectMediaItem {
   area: string;
   category: ProjectMediaCategory;
   description: string;
-  /** Original filename in `elegent-glass-film/`. */
+  /** Original filename in `project-media/`. */
   sourceFile: string;
   /** Set where something in the entry is inferred and needs a human check. */
   review?: string;

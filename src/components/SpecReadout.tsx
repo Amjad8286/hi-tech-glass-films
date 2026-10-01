@@ -10,17 +10,17 @@ export function SpecReadout({
   const isDark = tone === "dark";
   return (
     <dl
-      className={`grid grid-cols-3 divide-x rounded-xl border ${
+      className={`grid grid-cols-3 divide-x overflow-hidden rounded-xl border ${
         isDark
-          ? "divide-ink-line border-ink-line bg-ink"
-          : "divide-frost-deep border-frost-deep bg-white/60"
+          ? "divide-ink-line border-ink-line bg-ink/60"
+          : "divide-frost-deep border-frost-deep bg-white/70"
       }`}
     >
       {specs.map((s) => (
         <div key={s.label} className="px-3 py-4 text-center">
           <dd
             className={`font-mono text-xl font-medium tracking-tight ${
-              isDark ? "text-glass" : "text-glass-deep"
+              isDark ? "text-glass-light" : "text-glass-deep"
             }`}
           >
             {s.value}

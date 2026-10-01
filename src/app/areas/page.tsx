@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "Window film, frosted glass and mirror work across Mumbai — Andheri, Bandra, Worli, Dadar, Borivali, Powai, Chembur, Mulund, Thane and Navi Mumbai. Free site visit anywhere we cover.",
   alternates: { canonical: "/areas" },
   openGraph: {
-    title: "Areas We Serve — Elegant Glass Films Mumbai",
+    title: `Areas We Serve — ${site.name}, Mumbai`,
     description:
       "Every Mumbai locality we cover, from Colaba to Borivali and out to Thane and Navi Mumbai.",
     url: `${site.url}/areas`,
@@ -43,7 +43,7 @@ export default function AreasPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "Areas served by Elegant Glass Films",
+          name: `Areas served by ${site.name}`,
           numberOfItems: areas.length,
           itemListElement: areas.map((a, i) => ({
             "@type": "ListItem",
@@ -56,11 +56,11 @@ export default function AreasPage() {
 
       <Section className="pt-14 sm:pt-20">
         <Eyebrow>Where we work</Eyebrow>
-        <h1 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight sm:text-5xl">
+        <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
           Window film across Mumbai, Thane &amp; Navi Mumbai
         </h1>
         <p className="mt-5 max-w-2xl text-lg text-slate-muted">
-          We work out of Andheri West and cover {total} localities across the
+          We work out of {site.address.locality} and cover {total} localities across the
           city — from heritage glazing in Colaba to new towers on Ghodbunder
           Road. Site visits and written quotes are free everywhere on this list.
         </p>
@@ -84,7 +84,7 @@ export default function AreasPage() {
 
         return (
           <Section key={region} className="mt-16">
-            <h2 className="font-display text-2xl font-semibold sm:text-3xl">
+            <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
               {region}
             </h2>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -92,7 +92,7 @@ export default function AreasPage() {
                 <Link
                   key={a.slug}
                   href={`/areas/${a.slug}`}
-                  className="group rounded-2xl border border-frost-deep bg-white/60 p-5 transition-colors hover:border-glass"
+                  className="group surface p-5 transition-colors hover:border-glass"
                 >
                   <p className="font-display text-base font-semibold text-ink group-hover:text-glass-deep">
                     {a.name}

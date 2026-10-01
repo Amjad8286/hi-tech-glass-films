@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { site } from "@/lib/site";
 import { Section, Eyebrow } from "@/components/Section";
 import { CTABand } from "@/components/CTABand";
 import { ProjectMediaGallery } from "@/components/ProjectMediaGallery";
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
   // Brand omitted — the root layout's title template appends it.
   title: "Window Film Project Gallery, Mumbai",
   description:
-    "Photos and video from frosted, reeded, decorative, sun control and branded glass film projects installed by Elegant Glass Films across Mumbai homes, offices and clinics.",
+    "Photos and video from frosted, reeded, decorative, sun control and branded glass film projects installed across Mumbai homes, offices and clinics.",
   alternates: { canonical: "/gallery" },
   openGraph: {
-    title: "Window Film Projects Gallery — Elegant Glass Films Mumbai",
+    title: `Window Film Projects Gallery — ${site.name}, Mumbai`,
     description:
       "Real projects across Mumbai: frosted office partitions, reeded glass screens, decorative privacy film for homes, branded clinic doors, and sun control film.",
   },
@@ -22,7 +23,7 @@ export default function GalleryPage() {
     <>
       <Section className="pt-14 sm:pt-20">
         <Eyebrow>Our work</Eyebrow>
-        <h1 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight sm:text-5xl">
+        <h1 className="mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
           Glass we&apos;ve transformed across Mumbai
         </h1>
         <p className="mt-5 max-w-xl text-lg text-slate-muted">
